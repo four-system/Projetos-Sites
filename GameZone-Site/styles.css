@@ -1,9 +1,12 @@
 :root {
   --bg: #000;
   --panel: #111;
+  --panel-light: #181818;
   --text: #f7f8ff;
   --muted: #9a9a9a;
   --line: rgba(255,255,255,0.08);
+  --radius: 10px;
+  --transition: 0.2s ease;
 }
 
 * {
@@ -22,6 +25,8 @@ body {
   line-height: 1.6;
 }
 
+/* GERAL */
+
 a {
   color: inherit;
   text-decoration: none;
@@ -32,12 +37,21 @@ img {
   display: block;
 }
 
+button,
+input,
+textarea {
+  font: inherit;
+}
+
+/* HEADER */
+
 .site-header {
   position: sticky;
   top: 0;
   z-index: 10;
   background: rgba(0,0,0,0.95);
   border-bottom: 1px solid var(--line);
+  backdrop-filter: blur(6px);
 }
 
 .navbar,
@@ -60,7 +74,14 @@ img {
   gap: 10px;
   font-family: "Orbitron", sans-serif;
   font-weight: 700;
+  letter-spacing: 0.5px;
 }
+
+.brand-logo {
+  width: 42px;
+}
+
+/* MENU */
 
 .menu-toggle {
   width: 44px;
@@ -69,7 +90,7 @@ img {
   place-content: center;
   gap: 5px;
   border: 1px solid var(--line);
-  border-radius: 8px;
+  border-radius: var(--radius);
   background: rgba(255,255,255,0.04);
   cursor: pointer;
 }
@@ -85,8 +106,10 @@ img {
   inset: 72px 0 auto;
   display: none;
   padding: 16px;
+  margin: 0;
   list-style: none;
   background: #0a0a0a;
+  border-bottom: 1px solid var(--line);
 }
 
 .nav-links.open {
@@ -97,11 +120,13 @@ img {
 .nav-links a {
   display: block;
   padding: 12px;
-  border-radius: 8px;
+  border-radius: var(--radius);
   color: var(--muted);
+  transition: var(--transition);
 }
 
-.nav-links a:hover {
+.nav-links a:hover,
+.nav-links a.current-page {
   background: rgba(255,255,255,0.05);
   color: #fff;
 }
@@ -110,6 +135,10 @@ img {
 
 .section {
   padding: 72px 0;
+}
+
+.page-hero {
+  padding-bottom: 40px;
 }
 
 .hero,
@@ -129,20 +158,37 @@ h1,
 h2 {
   font-family: "Orbitron", sans-serif;
   line-height: 1.1;
+  margin-top: 0;
 }
 
 h1 {
   font-size: clamp(3rem, 15vw, 5rem);
+  margin-bottom: 18px;
 }
 
 h2 {
-  font-size: clamp(2rem, 8vw, 3rem);
+  font-size: clamp(1.8rem, 8vw, 2.7rem);
+}
+
+p {
+  margin-top: 0;
+}
+
+.eyebrow,
+.tag {
+  color: #b8b8b8;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
 .hero-text,
 .split p,
 .identity p,
-.contact-info p {
+.contact-info p,
+.games-info,
+.game-content small {
   color: var(--muted);
 }
 
@@ -156,10 +202,15 @@ h2 {
 
 .btn {
   padding: 12px 18px;
-  border-radius: 8px;
+  border-radius: var(--radius);
   border: 1px solid var(--line);
   font-weight: 700;
   cursor: pointer;
+  transition: var(--transition);
+}
+
+.btn:hover {
+  transform: translateY(-2px);
 }
 
 .btn-primary {
@@ -181,7 +232,7 @@ h2 {
 .stats article {
   background: var(--panel);
   border: 1px solid var(--line);
-  border-radius: 8px;
+  border-radius: var(--radius);
 }
 
 .info-card,
@@ -201,6 +252,12 @@ h2 {
 
 .game-card {
   overflow: hidden;
+  transition: var(--transition);
+}
+
+.game-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(255,255,255,0.15);
 }
 
 .game-card.hidden {
@@ -215,24 +272,50 @@ h2 {
   border-bottom: 1px solid var(--line);
 }
 
+.game-art span {
+  padding: 8px 14px;
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: var(--radius);
+  font-family: "Orbitron", sans-serif;
+  background: rgba(0,0,0,0.4);
+}
+
 .game-content {
   padding: 20px;
 }
+
+.game-content h2 {
+  margin-bottom: 10px;
+  font-size: 1.4rem;
+}
+
+.game-content small {
+  display: block;
+  margin-top: 14px;
+  font-size: 0.85rem;
+}
+
+/* FILTROS */
 
 .filter-bar {
   display: flex;
   gap: 10px;
   overflow-x: auto;
-  margin-bottom: 18px;
+  margin-bottom: 14px;
 }
 
 .filter-btn {
   padding: 10px 14px;
-  border-radius: 8px;
+  border-radius: var(--radius);
   border: 1px solid var(--line);
   background: #111;
   color: var(--muted);
   cursor: pointer;
+  transition: var(--transition);
+}
+
+.filter-btn:hover {
+  color: #fff;
 }
 
 .filter-btn.active {
@@ -251,16 +334,29 @@ h2 {
 .contact-form textarea {
   width: 100%;
   padding: 12px;
-  border-radius: 8px;
+  border-radius: var(--radius);
   border: 1px solid var(--line);
   background: #0d0d0d;
   color: #fff;
+  outline: none;
 }
+
+.contact-form input:focus,
+.contact-form textarea:focus {
+  border-color: rgba(255,255,255,0.2);
+}
+
+/* FOOTER */
 
 .footer {
   padding: 28px 0;
   border-top: 1px solid var(--line);
   color: var(--muted);
+}
+
+.footer a {
+  color: #fff;
+  font-weight: 600;
 }
 
 /* RESPONSIVO */
@@ -291,6 +387,7 @@ h2 {
     gap: 4px;
     padding: 0;
     background: transparent;
+    border: 0;
   }
 
   .hero,
