@@ -68,3 +68,25 @@ if(formulario){
     });
 
 }
+
+
+const slides = document.querySelectorAll(".carousel-item");
+
+if (slides.length > 0) {
+    let slideAtual = 0;
+    const tempoTroca = 3000;
+
+    function proximoSlide() {
+        
+        slides[slideAtual].classList.remove("active");
+        
+        
+        slideAtual = (slideAtual + 1) % slides.length;
+        
+        
+        slides[slideAtual].classList.add("active");
+    }
+
+    
+    setInterval(proximoSlide, tempoTroca);
+}
